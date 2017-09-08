@@ -90,7 +90,7 @@ class CompletePurchaseRequestTest extends TestCase
     public function testSendPending()
     {
         $this->request->setStatus('22');
-        $this->request->setSKey('9d65ed0b785fea1c8fc80b8316555ee3');
+        $this->request->setSKey('f3d5496b444ae3d11e09fa92a753ac60');
 
         $response = $this->request->send();
 

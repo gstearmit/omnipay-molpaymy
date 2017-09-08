@@ -50,8 +50,6 @@ class GatewayTest extends GatewayTestCase
         $this->VerifyKey = ( $this->APP_ENV == "local" and $this->APP_DEBUG == "true") ? $this->Dev_VerifyKey : $this->Pro_VerifyKey;
         /**** End Set ENV TEST ****/
 
-//        var_dump($this->MerchantId );
-//        var_dump($this->VerifyKey );
 
         $this->gateway = new Gateway($this->getHttpClient(), $this->getHttpRequest());
 
@@ -77,7 +75,7 @@ class GatewayTest extends GatewayTestCase
     public function testPurchase()
     {
         $response = $this->gateway->purchase($this->options)->send();
-
+        var_dump( $response->getRedirectUrl());
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
         $this->assertNull($response->getTransactionReference());
@@ -96,7 +94,7 @@ class GatewayTest extends GatewayTestCase
             'appcode' => $this->VerifyKey,
             'domain' => $this->MerchantId,
             'paydate' => '2016-03-29 04:02:21',
-            'skey' => '9b8be764cc5bad1b4a5d58a3ba4daf58',
+            'skey' => 'f3d5496b444ae3d11e09fa92a753ac60',
             'status' => '00',
             'tranID' => '000001',
         ));
