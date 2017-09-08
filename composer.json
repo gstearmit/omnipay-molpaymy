@@ -28,7 +28,8 @@
         "psr-4": { "Omnipay\\MOLPayMY\\Tests\\": "tests/" }
     },
     "require": {
-        "omnipay/common": "~2.0"
+        "omnipay/common": "~2.0",
+        "gstearmit/envyii2": "dev-master"
     },
     "require-dev": {
         "omnipay/tests": "~2.0"

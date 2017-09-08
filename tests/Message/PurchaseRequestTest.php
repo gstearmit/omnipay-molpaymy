@@ -4,11 +4,53 @@ namespace Omnipay\MOLPayMY\Message;
 
 use Omnipay\Common\CreditCard;
 use Omnipay\Tests\TestCase;
+use Dotenv\Dotenv;
 
 class PurchaseRequestTest extends TestCase
 {
+    protected $MerchantId;
+    protected $VerifyKey;
+
+    protected $APP_ENV;
+
+    protected $APP_DEBUG;
+
+    /** get env **/
+    protected $Dev_MerchantId;
+    protected $Dev_VerifyKey;
+
+    protected $Pro_MerchantId;
+    protected $Pro_VerifyKey;
+
+    /**
+     * @var string
+     */
+    private $fixturesFolder;
+
     public function setUp()
     {
+        $this->fixturesFolder = dirname(__DIR__);
+
+        $dotenv = new Dotenv($this->fixturesFolder);
+        $dotenv->load();
+
+        /** set/get env **/
+        $this->APP_ENV   = getenv('APP_ENV');
+
+        $this->APP_DEBUG = getenv('APP_DEBUG');
+
+
+        $this->Dev_MerchantId = getenv('Dev_MerchantId');
+        $this->Dev_VerifyKey  = getenv('Dev_VerifyKey');
+
+        $this->Pro_MerchantId = getenv('Pro_MerchantId');
+        $this->Pro_VerifyKey  = getenv('Pro_VerifyKey');
+
+        /**** Set ENV TEST ****/
+        $this->MerchantId = ( $this->APP_ENV == "local" and $this->APP_DEBUG == "true") ? $this->Dev_MerchantId : $this->Pro_MerchantId;
+        $this->VerifyKey = ( $this->APP_ENV == "local" and $this->APP_DEBUG == "true") ? $this->Dev_VerifyKey : $this->Pro_VerifyKey;
+        /**** End Set ENV TEST ****/
+
         $this->request = new PurchaseRequest($this->getHttpClient(), $this->getHttpRequest());
 
         $this->request->initialize(array(
@@ -22,10 +64,10 @@ class PurchaseRequestTest extends TestCase
             'currency' => 'MYR',
             'description' => 'Test Payment',
             'locale' => 'en',
-            'merchantId' => 'test1234',
+            'merchantId' => $this->MerchantId,
             'paymentMethod' => 'credit',
             'transactionId' => '20160331082207680000',
-            'verifyKey' => 'abcdefg',
+            'verifyKey' => $this->VerifyKey,
         ));
     }
 
